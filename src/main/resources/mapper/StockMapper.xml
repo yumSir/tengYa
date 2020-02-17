@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tengya.sales.dao.StockMapper">
+  <resultMap id="BaseResultMap" type="com.tengya.sales.entity.Stock">
+    <!--@mbg.generated-->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="PRODUCT_CODE" jdbcType="VARCHAR" property="productCode" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="MODELS" jdbcType="VARCHAR" property="models" />
+    <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+    <result column="COUNTS" jdbcType="INTEGER" property="counts" />
+    <result column="ATTRIBUTE1" jdbcType="VARCHAR" property="attribute1" />
+    <result column="ATTRIBUTE2" jdbcType="VARCHAR" property="attribute2" />
+    <result column="ATTRIBUTE3" jdbcType="VARCHAR" property="attribute3" />
+    <result column="CREATE_IP" jdbcType="VARCHAR" property="createIp" />
+    <result column="CREATE_USER_ID" jdbcType="VARCHAR" property="createUserId" />
+    <result column="CREATE_USER_NAME" jdbcType="VARCHAR" property="createUserName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="MODIFY_IP" jdbcType="VARCHAR" property="modifyIp" />
+    <result column="MODIFY_USER_ID" jdbcType="VARCHAR" property="modifyUserId" />
+    <result column="MODIFY_USER_NAME" jdbcType="VARCHAR" property="modifyUserName" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="DELETE_IP" jdbcType="VARCHAR" property="deleteIp" />
+    <result column="DELETE_USER_ID" jdbcType="VARCHAR" property="deleteUserId" />
+    <result column="DELETE_USER_NAME" jdbcType="VARCHAR" property="deleteUserName" />
+    <result column="DELETE_TIME" jdbcType="TIMESTAMP" property="deleteTime" />
+    <result column="DELETE_FLAG" jdbcType="CHAR" property="deleteFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    ID, PRODUCT_CODE, PRODUCT_NAME, MODELS, UNIT, COUNTS, ATTRIBUTE1, ATTRIBUTE2, ATTRIBUTE3, 
+    CREATE_IP, CREATE_USER_ID, CREATE_USER_NAME, CREATE_TIME, MODIFY_IP, MODIFY_USER_ID, 
+    MODIFY_USER_NAME, MODIFY_TIME, DELETE_IP, DELETE_USER_ID, DELETE_USER_NAME, DELETE_TIME, 
+    DELETE_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from `stock`
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getOrderVo" parameterType="map" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from `stock`
+    <where>
+      <if test="productCode != null and productCode != ''">
+        PRODUCT_CODE = #{productCode}
+      </if>
+    </where>
+    limit 1
+  </select>
+    <select id="selectStockList" parameterType="com.tengya.sales.entity.Stock" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List" />
+        from `stock`
+     <where>
+       <if test="attribute1 != null and attribute1 == 'lack'">
+         counts <![CDATA[<=]]> 0
+       </if>
+     </where>
+    </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from `stock`
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.tengya.sales.entity.Stock" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `stock` (PRODUCT_CODE, PRODUCT_NAME, MODELS,
+      UNIT, COUNTS, ATTRIBUTE1, 
+      ATTRIBUTE2, ATTRIBUTE3, CREATE_IP, 
+      CREATE_USER_ID, CREATE_USER_NAME, CREATE_TIME, 
+      MODIFY_IP, MODIFY_USER_ID, MODIFY_USER_NAME, 
+      MODIFY_TIME, DELETE_IP, DELETE_USER_ID, 
+      DELETE_USER_NAME, DELETE_TIME, DELETE_FLAG
+      )
+    values (#{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{models,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{counts,jdbcType=INTEGER}, #{attribute1,jdbcType=VARCHAR}, 
+      #{attribute2,jdbcType=VARCHAR}, #{attribute3,jdbcType=VARCHAR}, #{createIp,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyIp,jdbcType=VARCHAR}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{deleteIp,jdbcType=VARCHAR}, #{deleteUserId,jdbcType=VARCHAR}, 
+      #{deleteUserName,jdbcType=VARCHAR}, #{deleteTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="ID" keyProperty="id" parameterType="com.tengya.sales.entity.Stock" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `stock`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productCode != null">
+        PRODUCT_CODE,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="models != null">
+        MODELS,
+      </if>
+      <if test="unit != null">
+        UNIT,
+      </if>
+      <if test="counts != null">
+        COUNTS,
+      </if>
+      <if test="attribute1 != null">
+        ATTRIBUTE1,
+      </if>
+      <if test="attribute2 != null">
+        ATTRIBUTE2,
+      </if>
+      <if test="attribute3 != null">
+        ATTRIBUTE3,
+      </if>
+      <if test="createIp != null">
+        CREATE_IP,
+      </if>
+      <if test="createUserId != null">
+        CREATE_USER_ID,
+      </if>
+      <if test="createUserName != null">
+        CREATE_USER_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="modifyIp != null">
+        MODIFY_IP,
+      </if>
+      <if test="modifyUserId != null">
+        MODIFY_USER_ID,
+      </if>
+      <if test="modifyUserName != null">
+        MODIFY_USER_NAME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="deleteIp != null">
+        DELETE_IP,
+      </if>
+      <if test="deleteUserId != null">
+        DELETE_USER_ID,
+      </if>
+      <if test="deleteUserName != null">
+        DELETE_USER_NAME,
+      </if>
+      <if test="deleteTime != null">
+        DELETE_TIME,
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productCode != null">
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="models != null">
+        #{models,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="counts != null">
+        #{counts,jdbcType=INTEGER},
+      </if>
+      <if test="attribute1 != null">
+        #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute2 != null">
+        #{attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute3 != null">
+        #{attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="createIp != null">
+        #{createIp,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyIp != null">
+        #{modifyIp,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserId != null">
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserName != null">
+        #{modifyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteIp != null">
+        #{deleteIp,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteUserId != null">
+        #{deleteUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteUserName != null">
+        #{deleteUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tengya.sales.entity.Stock">
+    <!--@mbg.generated-->
+    update `stock`
+    <set>
+      <if test="productCode != null">
+        PRODUCT_CODE = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="models != null">
+        MODELS = #{models,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="counts != null">
+        COUNTS = #{counts,jdbcType=INTEGER},
+      </if>
+      <if test="attribute1 != null">
+        ATTRIBUTE1 = #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute2 != null">
+        ATTRIBUTE2 = #{attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute3 != null">
+        ATTRIBUTE3 = #{attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="createIp != null">
+        CREATE_IP = #{createIp,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        CREATE_USER_NAME = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyIp != null">
+        MODIFY_IP = #{modifyIp,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserId != null">
+        MODIFY_USER_ID = #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserName != null">
+        MODIFY_USER_NAME = #{modifyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteIp != null">
+        DELETE_IP = #{deleteIp,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteUserId != null">
+        DELETE_USER_ID = #{deleteUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteUserName != null">
+        DELETE_USER_NAME = #{deleteUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null">
+        DELETE_TIME = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tengya.sales.entity.Stock">
+    <!--@mbg.generated-->
+    update `stock`
+    set PRODUCT_CODE = #{productCode,jdbcType=VARCHAR},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      MODELS = #{models,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      COUNTS = #{counts,jdbcType=INTEGER},
+      ATTRIBUTE1 = #{attribute1,jdbcType=VARCHAR},
+      ATTRIBUTE2 = #{attribute2,jdbcType=VARCHAR},
+      ATTRIBUTE3 = #{attribute3,jdbcType=VARCHAR},
+      CREATE_IP = #{createIp,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR},
+      CREATE_USER_NAME = #{createUserName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_IP = #{modifyIp,jdbcType=VARCHAR},
+      MODIFY_USER_ID = #{modifyUserId,jdbcType=VARCHAR},
+      MODIFY_USER_NAME = #{modifyUserName,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      DELETE_IP = #{deleteIp,jdbcType=VARCHAR},
+      DELETE_USER_ID = #{deleteUserId,jdbcType=VARCHAR},
+      DELETE_USER_NAME = #{deleteUserName,jdbcType=VARCHAR},
+      DELETE_TIME = #{deleteTime,jdbcType=TIMESTAMP},
+      DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
